@@ -7,14 +7,11 @@ public class Product {
 	
 	public Product(String name, BigDecimal price) {
 		try {
-			validateName(name);
-			validatePrice(price);
+			setName(name);
+			setPrice(price);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("Product could not be created: " + e.getMessage());
 		}
-		this.name = name;
-		this.price = price;
-		
 	}
 	
 	private void validateName(String name) {
@@ -22,7 +19,7 @@ public class Product {
 			throw new IllegalArgumentException("Product name is null!");
 		}
 		if (name.trim().isEmpty()) {
-			throw new IllegalArgumentException("Procut name is blank!");
+			throw new IllegalArgumentException("Product name is blank!");
 		}
 	}
 	
@@ -35,4 +32,29 @@ public class Product {
 		}
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		try {
+			validateName(name);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("New product name is invalid: " + e.getMessage());
+		}
+		this.name = name;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		try {
+			validatePrice(price);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("New product price is invalid: " + e.getMessage());
+		}
+		this.price = price;
+	}
 }
