@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
@@ -36,16 +37,16 @@ public class PurchaseTest {
 			"1 music cd at -12", 
 			"2 Chocolate bars at " })
 	void parseInvalidPurchasePriceShouldThrowIllegalArgumentException(String input) {
-		Purchase purchase = new Purchase(input);
+		assertThrows(IllegalArgumentException.class, () -> new Purchase(input));
 	}
 
 	@ParameterizedTest
 	@ValueSource(strings = { 
 			"1  imported at 10.00", 
 			"1 at 12.00", 
-			"1 music at 12.00" })
+			"1   CD at " })
 	void parseInvalidPurchaseProductShouldThrowIllegalArgumentException(String input) {
-		Purchase purchase = new Purchase(input);
+		assertThrows(IllegalArgumentException.class, () -> new Purchase(input));
 	}
 
 	@Test
