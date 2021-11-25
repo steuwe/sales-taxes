@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
@@ -11,12 +13,14 @@ public class ProductTest {
 	}
 	
 	void testNullProductNameShouldThrowIllegalArgumentException() {
-		Product product = new Product(null, BigDecimal.valueOf(1));
+		assertThrows(IllegalArgumentException.class, 
+				() -> new Product(null, BigDecimal.valueOf(1)));
 	}
 	
 	@Test
 	void testEmptyProductNameShouldThrowIllegalArgumentException() {
-		Product product = new Product("", BigDecimal.valueOf(1));
+		assertThrows(IllegalArgumentException.class, 
+				() -> new Product("", BigDecimal.valueOf(1)));
 	}
 	
 	@Test
@@ -25,12 +29,14 @@ public class ProductTest {
 	}
 	
 	void testNullProductPriceShouldThrowIllegalArgumentException() {
-		Product product = new Product("box of chocolates", null);
+		assertThrows(IllegalArgumentException.class, 
+				() -> new Product("box of chocolates", null));
 	}
 	
 	@Test
 	void testNegativeProductPriceShouldThrowIllegalArgumentException() {
-		Product product = new Product("", BigDecimal.valueOf(-1.0));
+		assertThrows(IllegalArgumentException.class, 
+				() -> new Product("", BigDecimal.valueOf(-1.0)));
 	}
 	
 }
