@@ -21,8 +21,8 @@ public class Product {
 		if (name == null) {
 			throw new IllegalArgumentException("Product name is null!");
 		}
-		if (name.isEmpty()) {
-			throw new IllegalArgumentException("Procut name is empty!");
+		if (name.trim().isEmpty()) {
+			throw new IllegalArgumentException("Procut name is blank!");
 		}
 	}
 	

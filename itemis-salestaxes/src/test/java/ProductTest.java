@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ProductTest {
 	
@@ -21,10 +23,11 @@ public class ProductTest {
 				() -> new Product(null, defaultValidPrice));
 	}
 	
-	@Test
-	void testEmptyProductNameShouldThrowIllegalArgumentException() {
+	@ParameterizedTest
+	@ValueSource(strings= {"", " "})
+	void testEmptyOrBlankProductNameShouldThrowIllegalArgumentException(String name) {
 		assertThrows(IllegalArgumentException.class, 
-				() -> new Product("", defaultValidPrice));
+				() -> new Product(name, defaultValidPrice));
 	}
 	
 	void testNullProductPriceShouldThrowIllegalArgumentException() {
