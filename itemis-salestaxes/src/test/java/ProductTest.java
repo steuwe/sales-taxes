@@ -1,4 +1,6 @@
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 
@@ -15,12 +17,27 @@ public class ProductTest {
 	
 	@Test
 	void testProductNameAndPriceShouldNotThrow() {
-		Product product = new Product(defaultValidName, defaultValidPrice);
+		new Product(defaultValidName, defaultValidPrice);
 	}
 	
+	@Test
 	void testNullProductNameShouldThrowIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, 
 				() -> new Product(null, defaultValidPrice));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = {"box of chocolates", "chocolate bar", "book", "bottle of headache pills"})
+	void testProductExemptionShouldNotThrow(String input) {
+		Product product = new Product(input, defaultValidPrice);
+		assertTrue(product.isExempt());
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = {"music CD", "bottle of perfume"})
+	void testProductNonExemptionShouldNotThrow(String input) {
+		Product product = new Product(input, defaultValidPrice);
+		assertFalse(product.isExempt());
 	}
 	
 	@ParameterizedTest
@@ -30,6 +47,7 @@ public class ProductTest {
 				() -> new Product(name, defaultValidPrice));
 	}
 	
+	@Test
 	void testNullProductPriceShouldThrowIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, 
 				() -> new Product(defaultValidName, null));

@@ -4,11 +4,13 @@ public class Product {
 
 	private String name;
 	private BigDecimal price;
+	private boolean isExempt;
 	
 	public Product(String name, BigDecimal price) {
 		try {
 			setName(name);
 			setPrice(price);
+			setExemption(name);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("Product could not be created: " + e.getMessage());
 		}
@@ -29,6 +31,16 @@ public class Product {
 		}
 		if (price.compareTo(BigDecimal.valueOf(0)) < 0) {
 			throw new IllegalArgumentException("Product price is negative!");
+		}
+	}
+	
+	private void setExemption(String name) {
+		if (name.contains("chocolate") ||
+				name.contains("pills") ||
+				name.contains("book")) {
+			isExempt = true;
+		} else {
+			isExempt = false;
 		}
 	}
 	
@@ -56,5 +68,9 @@ public class Product {
 			throw new IllegalArgumentException("New product price is invalid: " + e.getMessage());
 		}
 		this.price = price;
+	}
+	
+	public boolean isExempt() {
+		return isExempt;
 	}
 }
