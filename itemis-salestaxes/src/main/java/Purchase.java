@@ -9,80 +9,10 @@ public class Purchase {
 	private boolean isImported;
 	private Product product;
 
-	public Purchase(String input) {
-		parseInputString(input);
-	}
-
-	private void parseInputString(String input) {
-		try {
-			validateInput(input);
-			String parsedInput = input.trim();
-			isImported = parseImported(parsedInput);
-			parsedInput = removeImportedFromInput(parsedInput);
-			quantity = parseQuantity(parsedInput);
-			parsedInput = removeQuantityFromInput(parsedInput);
-			product = parseProduct(parsedInput);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Failed to create purchase: " + e.getMessage());
-		}
-	}
-	
-	private void validateInput(String input) {
-		if (input == null) {
-			throw new IllegalArgumentException("Input is null!");
-		}
-		if (input.isEmpty() || input.trim().isEmpty()) {
-			throw new IllegalArgumentException("Input is empty or blank!");
-		}
-		if (!input.contains("at")) {
-			throw new IllegalArgumentException("Input must indicate price with 'at'");
-		}
-	}
-	
-	private boolean parseImported(String input) {
-		if (input.contains("imported")) {
-			return true;
-		}
-		return false;
-	}
-	
-	private String removeImportedFromInput(String input) {
-		if (isImported) {
-			return input.replace("imported ", "");
-		}
-		return input;
-	}
-	
-	private int parseQuantity(String input) {
-		String first_token = input.split(" ")[0];
-		try { 
-			int parsed_quantity = Integer.parseInt(first_token);
-			if (parsed_quantity < 1) {
-				throw new IllegalArgumentException("Product quantity is less than 1!");
-			}
-			return parsed_quantity;
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Product quantity is missing or not formatted correctly: " + e.getMessage());
-		}
-	}
-	
-	private String removeQuantityFromInput(String input) {
-		String quantityAsString = Integer.toString(quantity);
-		return input.replaceFirst(quantityAsString, "").trim();
-	}
-
-	private Product parseProduct(String input) {
-		String[] splitInput = input.split(" at ");
-		if (splitInput.length < 2) {
-			throw new IllegalArgumentException("Product name or price is missing!");
-		}
-		String productName = splitInput[0].trim();
-		try {
-			BigDecimal productPrice = new BigDecimal(splitInput[1].trim());
-			return new Product(productName, productPrice);
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Product price is not formatted correctly: " + e.getMessage());
-		}
+	public Purchase(int quantity, boolean isImported, String productName, BigDecimal productPrice) {
+		this.quantity = quantity;
+		this.isImported = isImported;
+		this.product = new Product(productName, productPrice);
 	}
 	
 	public BigDecimal getPriceWithoutTaxes() {
