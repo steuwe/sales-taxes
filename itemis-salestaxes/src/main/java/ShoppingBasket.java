@@ -18,9 +18,9 @@ public class ShoppingBasket {
 			Purchase purchase = parser.parsePurchase(item);
 			purchases.add(purchase);
 		} catch (IllegalArgumentException e) {
-			System.out.println("Illegal input: ");
-			System.out.println(e.getMessage());
-			System.out.println("Try again");
+			// error handling depends on type of application
+			// if user input is taken directly from console, a simple error msg on console could be enough
+			throw new IllegalArgumentException("Could not add purchase: " + e.getMessage());
 		}
 	}
 	

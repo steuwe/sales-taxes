@@ -29,7 +29,7 @@ public class Purchase {
 			tax = tax.add(calculateImportTax(price));
 		}
 		price = price.add(roundTaxedValue(tax));
-		return roundFinalPrice(price).multiply(BigDecimal.valueOf(quantity));
+		return roundTwoDecimalPlaces(price).multiply(BigDecimal.valueOf(quantity));
 	}
 	
 	private BigDecimal calculateSalesTax(BigDecimal price) {
@@ -52,7 +52,7 @@ public class Purchase {
 		return value;
 	}
 	
-	private BigDecimal roundFinalPrice(BigDecimal price) {
+	private BigDecimal roundTwoDecimalPlaces(BigDecimal price) {
 		return price.setScale(2, RoundingMode.HALF_UP);
 	}
 	

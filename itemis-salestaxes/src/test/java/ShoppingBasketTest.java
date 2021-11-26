@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
@@ -25,7 +26,7 @@ public class ShoppingBasketTest {
 			"1 book at .x"
 	})
 	void addInvalidPurchaseShouldThrowIllegalArgumentException() {
-		basket.addPurchase("1 at 12.49");
+		assertThrows(IllegalArgumentException.class, () -> basket.addPurchase("1 at 12.49"));
 	}
 	
 	@Test
@@ -49,7 +50,7 @@ public class ShoppingBasketTest {
 		}
 	
 	@Test
-	void printReceiptDetails() {
+	void getReceiptDetails() {
 		basket.addPurchase("1 book at 12.49");
 		basket.addPurchase("1 music CD at 14.99");
 		basket.addPurchase("1 chocolate bar at 0.85");
@@ -65,7 +66,7 @@ public class ShoppingBasketTest {
 	}
 	
 	@Test
-	void printReceiptDetails2() {
+	void getReceiptDetails2() {
 		basket.addPurchase("1 imported box of chocolates at 10.00");
 		basket.addPurchase("1 imported bottle of perfume at 47.50");
 		String receipt = basket.getReceipt();
@@ -79,7 +80,7 @@ public class ShoppingBasketTest {
 	}
 	
 	@Test
-	void printReceiptDetails3() {
+	void getReceiptDetails3() {
 		basket.addPurchase("1 imported bottle of perfume at 27.99");
 		basket.addPurchase("1 bottle of perfume at 18.99");
 		basket.addPurchase("1 packet of headache pills at 9.75");
