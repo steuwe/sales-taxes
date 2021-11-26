@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ShoppingBasketTest {
 	
@@ -13,6 +15,17 @@ public class ShoppingBasketTest {
 	@BeforeEach
 	void createBasket() {
 		basket = new ShoppingBasket();
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = {
+			"1 at 12.49",
+			"box of chocolates at 12.49",
+			"box of chocolates",
+			"1 book at .x"
+	})
+	void addInvalidPurchaseShouldThrowIllegalArgumentException() {
+		basket.addPurchase("1 at 12.49");
 	}
 	
 	@Test

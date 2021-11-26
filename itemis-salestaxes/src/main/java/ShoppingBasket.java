@@ -6,14 +6,16 @@ import java.util.List;
 public class ShoppingBasket {
 
 	private List<Purchase> purchases;
+	private PurchaseParser parser;
 
 	public ShoppingBasket() {
 		purchases = new LinkedList<Purchase>();
+		parser = new PurchaseParser();
 	}
 	
 	public void addPurchase(String item) {
 		try {
-			Purchase purchase = new Purchase(item);
+			Purchase purchase = parser.parsePurchase(item);
 			purchases.add(purchase);
 		} catch (IllegalArgumentException e) {
 			System.out.println("Illegal input: ");
