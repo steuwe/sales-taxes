@@ -9,7 +9,6 @@ public class Purchase {
 	private boolean isImported;
 	private Product product;
 
-
 	public Purchase(String input) {
 		parseInputString(input);
 	}
@@ -18,15 +17,11 @@ public class Purchase {
 		try {
 			validateInput(input);
 			String parsedInput = input.trim();
-			System.out.println(parsedInput);
 			isImported = parseImported(parsedInput);
 			parsedInput = removeImportedFromInput(parsedInput);
-			System.out.println(parsedInput);
 			quantity = parseQuantity(parsedInput);
 			parsedInput = removeQuantityFromInput(parsedInput);
-			System.out.println(parsedInput);
 			product = parseProduct(parsedInput);
-			System.out.println("product: " + product.getName() + " " + product.getPrice());
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("Failed to create purchase: " + e.getMessage());
 		}
@@ -91,24 +86,20 @@ public class Purchase {
 	}
 	
 	public BigDecimal getPriceWithoutTaxes() {
-		return product.getPrice();
+		return product.getPrice().multiply(BigDecimal.valueOf(quantity));
 	}
 
 	public BigDecimal getPriceWithTaxes() {
 		BigDecimal price = product.getPrice();
-		BigDecimal salesTax = BigDecimal.valueOf(0);
-		BigDecimal importTax = BigDecimal.valueOf(0);
+		BigDecimal tax = BigDecimal.valueOf(0);
 		if (!product.isExempt()) {
-			salesTax = calculateSalesTax(price);
-			salesTax = roundTaxedValue(salesTax);
+			tax = tax.add(calculateSalesTax(price));
 		}
 		if (isImported) {
-			importTax = calculateImportTax(price);
+			tax = tax.add(calculateImportTax(price));
 		}
-		price = applyTax(price, salesTax);
-		price = applyTax(price, importTax);
-		
-		return roundFinalPrice(price);
+		price = price.add(roundTaxedValue(tax));
+		return roundFinalPrice(price).multiply(BigDecimal.valueOf(quantity));
 	}
 	
 	private BigDecimal calculateSalesTax(BigDecimal price) {
@@ -124,13 +115,40 @@ public class Purchase {
 	}
 
 	private BigDecimal roundTaxedValue(BigDecimal value) {
-		value = value.multiply(BigDecimal.valueOf(20));
 		value = value.setScale(2, RoundingMode.HALF_UP);
+		value = value.multiply(BigDecimal.valueOf(20));
+		value = value.setScale(0, RoundingMode.CEILING);
 		value = value.divide(BigDecimal.valueOf(20));
 		return value;
 	}
 	
 	private BigDecimal roundFinalPrice(BigDecimal price) {
 		return price.setScale(2, RoundingMode.HALF_UP);
+	}
+	
+	public BigDecimal getAmountTaxedBySalesTax() {
+		BigDecimal price = product.getPrice();
+		BigDecimal salesTax = BigDecimal.valueOf(0);
+		BigDecimal importTax = BigDecimal.valueOf(0);
+		if (!product.isExempt()) {
+			salesTax = calculateSalesTax(price);
+		}
+		if (isImported) {
+			importTax = calculateImportTax(price);
+		}
+		BigDecimal newPrice = applyTax(price, salesTax.add(importTax));
+		return roundTaxedValue(newPrice.subtract(price));
+	}
+	
+	public String getProductName() {
+		return product.getName();
+	}
+	
+	public int getQuantity() {
+		return quantity;
+	}
+	
+	public boolean isImported() {
+		return isImported;
 	}
 }

@@ -18,7 +18,7 @@ public class PurchaseTest {
 			"2 chocolate bars at 15.99",
 			"1 packet of headache pills at 9.75" })
 	void parseValidPurchaseShouldNotThrow(String input) {
-		Purchase purchase = new Purchase(input);
+		new Purchase(input);
 	}
 
 	@ParameterizedTest
@@ -28,7 +28,7 @@ public class PurchaseTest {
 			"2 Chocolate bars at 15.99", 
 			"2 Chocolate bars at 05.09" })
 	void parsePurchaseFringeCasesShouldNotThrow(String input) {
-		Purchase purchase = new Purchase(input);
+		new Purchase(input);
 	}
 
 	@ParameterizedTest
@@ -47,6 +47,14 @@ public class PurchaseTest {
 			"1   CD at " })
 	void parseInvalidPurchaseProductShouldThrowIllegalArgumentException(String input) {
 		assertThrows(IllegalArgumentException.class, () -> new Purchase(input));
+	}
+	
+	@Test
+	void getPriceForMultipleItems() {
+		Purchase purchase = new Purchase("2 books at 12.49");
+		BigDecimal price = purchase.getPriceWithoutTaxes();
+		BigDecimal expected = BigDecimal.valueOf(24.98);
+		assertTrue(price.compareTo(expected) == 0);
 	}
 
 	@Test
@@ -97,6 +105,23 @@ public class PurchaseTest {
 		assertTrue(actual_price.compareTo(expected_price) == 0);
 	}
 
+	@Test
+	void calculateSalesTaxForNonExemptImportedProductShouldNotThrow() {
+		Purchase purchase = new Purchase("1 imported bottle of perfume at 47.50");
+		BigDecimal actual_price = purchase.getPriceWithTaxes();
+		BigDecimal expected_price = BigDecimal.valueOf(54.65);
+		System.out.println(actual_price);
+		System.out.println(purchase.getAmountTaxedBySalesTax());
+		assertTrue(actual_price.compareTo(expected_price) == 0);
+	}
+	
+	@Test
+	void calculateSalesTaxForExemptImportedProductShouldNotThrow() {
+		Purchase purchase = new Purchase("1 imported box of chocolates at 10.00");
+		BigDecimal actual_price = purchase.getPriceWithTaxes();
+		BigDecimal expected_price = BigDecimal.valueOf(10.50);
+		assertTrue(actual_price.compareTo(expected_price) == 0);
+	}
 	
 
 }
