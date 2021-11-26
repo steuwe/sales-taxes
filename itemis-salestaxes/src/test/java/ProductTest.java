@@ -27,7 +27,7 @@ public class ProductTest {
 	}
 	
 	@ParameterizedTest
-	@ValueSource(strings = {"box of chocolates", "chocolate bar", "book", "bottle of headache pills"})
+	@ValueSource(strings = {"box of chocolates", "CHOCOLATE", "chocolate bar", "book", "bottle of headache pills"})
 	void testProductExemptionShouldNotThrow(String input) {
 		Product product = new Product(input, defaultValidPrice);
 		assertTrue(product.isExempt());

@@ -35,9 +35,9 @@ public class Product {
 	}
 	
 	private void setExemption(String name) {
-		if (name.contains("chocolate") ||
-				name.contains("pills") ||
-				name.contains("book")) {
+		if (name.toLowerCase().contains("chocolate") ||
+				name.toLowerCase().contains("pills") ||
+				name.toLowerCase().contains("book")) {
 			isExempt = true;
 		} else {
 			isExempt = false;
