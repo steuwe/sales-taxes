@@ -26,7 +26,7 @@ public class ShoppingBasket {
 	
 	public String getReceipt() {
 		DecimalFormat df = new DecimalFormat("0.00");
-		StringBuffer receipt = new StringBuffer("");
+		StringBuilder receipt = new StringBuilder("");
 		BigDecimal totalSalesTax = BigDecimal.valueOf(0);
 		BigDecimal totalPrice = BigDecimal.valueOf(0);
 		for (Purchase purchase : purchases) {
