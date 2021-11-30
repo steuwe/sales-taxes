@@ -7,5 +7,8 @@ However, the code could easily be configured to take user input directly from th
 
 I added the simple functionality of buying multiple items in one go, as it seemed useful.
 
-If more products had been required, I would probably have written a separate class to match the product name to an existing product.
-For this scale, however, the name check in the Product class should be small enough to be kept in the class.
+I created a small product database file to allow only known products to be purchased and to check the product category.
+A relational database would make sense for the products, but for simplicity's sake, I chose a CSV file.
+
+The error handling by the ShoppingBasket class would depend on the context of the application.
+One option could be to simply shut down the program if the database was unavailable, for example.
