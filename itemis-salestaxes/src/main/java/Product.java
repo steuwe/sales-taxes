@@ -36,32 +36,11 @@ public class Product {
 	
 	private void setExemption(String name) {
 		// depending on how products are organised (classes, database, ...) this could be done in a separate class
-		if (isFood() || isMedicalProduct() || isBook()) {
+		if (SalesTaxExemptionChecker.checkExemption(name)) {
 			isExempt = true;
 		} else {
 			isExempt = false;
 		}
-	}
-	
-	private boolean isFood() {
-		if (name.toLowerCase().contains("chocolate")) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean isMedicalProduct() {
-		if (name.toLowerCase().contains("pills")) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean isBook() {
-		if (name.toLowerCase().contains("book")) {
-			return true;
-		}
-		return false;
 	}
 	
 	public String getName() {
