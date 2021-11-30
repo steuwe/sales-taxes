@@ -1,3 +1,4 @@
+package unitTest;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,7 +20,7 @@ public class ProductTest {
 
 	
 	@Test
-	void testProductNameAndPriceShouldNotThrow() throws FileNotFoundException, IOException {
+	void testProductName() throws FileNotFoundException, IOException {
 		new Product(defaultValidName, defaultValidPrice);
 	}
 	
@@ -37,14 +38,14 @@ public class ProductTest {
 	
 	@ParameterizedTest
 	@ValueSource(strings = {"box of chocolates", "chocolate bar", "book", "packet of headache pills"})
-	void testProductExemptionShouldNotThrow(String input) throws FileNotFoundException, IOException {
+	void testProductExemption(String input) throws FileNotFoundException, IOException {
 		Product product = new Product(input, defaultValidPrice);
 		assertTrue(product.isExempt());
 	}
 	
 	@ParameterizedTest
 	@ValueSource(strings = {"music CD", "bottle of perfume"})
-	void testProductNonExemptionShouldNotThrow(String input) throws FileNotFoundException, IOException {
+	void testProductNonExemption(String input) throws FileNotFoundException, IOException {
 		Product product = new Product(input, defaultValidPrice);
 		assertFalse(product.isExempt());
 	}

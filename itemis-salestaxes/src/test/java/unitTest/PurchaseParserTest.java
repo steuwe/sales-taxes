@@ -1,3 +1,4 @@
+package unitTest;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
@@ -27,7 +28,7 @@ public class PurchaseParserTest {
 			"1 music cd at 12", 
 			"2 chocolate bar at 15.99",
 			"1 packet of headache pills at 9.75" })
-	void parseValidPurchaseShouldNotThrow(String input) throws FileNotFoundException, IOException {
+	void parseValidPurchase(String input) throws FileNotFoundException, IOException {
 		parser.parsePurchase(input);
 	}
 
@@ -37,7 +38,7 @@ public class PurchaseParserTest {
 			"1 music cd at 12",
 			"2 Chocolate bar at 15.99", 
 			"2 Chocolate bar at 05.09" })
-	void parsePurchaseFringeCasesShouldNotThrow(String input) throws FileNotFoundException, IOException {
+	void parseValidPurchaseFringeCases(String input) throws FileNotFoundException, IOException {
 		parser.parsePurchase(input);
 	}
 
@@ -46,17 +47,17 @@ public class PurchaseParserTest {
 	@ValueSource(strings = {
 			"", " "
 	})
-	void parseBlankPurchaseInput(String input) {
+	void parseBlankPurchaseInputShouldThrowIllegalArgumentException(String input) {
 		assertThrows(IllegalArgumentException.class, () -> parser.parsePurchase(input));
 	}
 	
 	@Test
-	void parseNullPurchaseInput() {
+	void parseNullPurchaseInputShouldThrowIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, () -> parser.parsePurchase(null));
 	}
 	
 	@Test
-	void parseMissingAt() {
+	void parseMissingAtShouldThrowIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, () -> parser.parsePurchase("1 box 12.00"));
 	}
 	

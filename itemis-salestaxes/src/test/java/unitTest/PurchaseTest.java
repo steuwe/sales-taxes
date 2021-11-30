@@ -1,3 +1,4 @@
+package unitTest;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ public class PurchaseTest {
 	}
 
 	@Test
-	void getPriceForBookShouldNotThrow() throws FileNotFoundException, IOException {
+	void getPriceForBook() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, false, "book", BigDecimal.valueOf(12.49));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(12.49);
@@ -27,7 +28,7 @@ public class PurchaseTest {
 	}
 
 	@Test
-	void getPriceForFoodShouldNotThrow() throws FileNotFoundException, IOException {
+	void getPriceForFood() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, false, "chocolate bar", BigDecimal.valueOf(0.85));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(0.85);
@@ -35,7 +36,7 @@ public class PurchaseTest {
 	}
 	
 	@Test
-	void getPriceForMedicalProductShouldNotThrow() throws FileNotFoundException, IOException {
+	void getPriceForMedicalProduct() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, false, "packet of headache pills", BigDecimal.valueOf(9.75));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(9.75);
@@ -43,7 +44,7 @@ public class PurchaseTest {
 	}
 
 	@Test
-	void calculateSalesTaxForNonExemptProductShouldNotThrow() throws FileNotFoundException, IOException {
+	void calculateSalesTaxForNonExemptProduct() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, false, "music cd", BigDecimal.valueOf(14.99));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(16.49);
@@ -51,7 +52,7 @@ public class PurchaseTest {
 	}
 	
 	@Test
-	void calculateTaxForImportedNonExemptProductShouldNotThrow() throws FileNotFoundException, IOException {
+	void calculateTaxForImportedNonExemptProduct() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, true, "bottle of perfume", BigDecimal.valueOf(27.99));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(32.19);
@@ -59,7 +60,7 @@ public class PurchaseTest {
 	}
 	
 	@Test
-	void calculateTaxForImportedExemptProductShouldNotThrow() throws FileNotFoundException, IOException {
+	void calculateTaxForImportedExemptProduct() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, true, "box of chocolates", BigDecimal.valueOf(10.00));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(10.50);
@@ -67,7 +68,7 @@ public class PurchaseTest {
 	}
 
 	@Test
-	void calculateSalesTaxForNonExemptImportedProductShouldNotThrow() throws FileNotFoundException, IOException {
+	void calculateSalesTaxForNonExemptImportedProduct() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, true, "bottle of perfume", BigDecimal.valueOf(47.50));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(54.65);
@@ -77,7 +78,7 @@ public class PurchaseTest {
 	}
 	
 	@Test
-	void calculateSalesTaxForExemptImportedProductShouldNotThrow() throws FileNotFoundException, IOException {
+	void calculateSalesTaxForExemptImportedProduct() throws FileNotFoundException, IOException {
 		Purchase purchase = new Purchase(1, true, "box of chocolates", BigDecimal.valueOf(10.00));
 		BigDecimal actual_price = purchase.getPriceWithTaxes();
 		BigDecimal expected_price = BigDecimal.valueOf(10.50);
