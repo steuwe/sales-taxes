@@ -2,11 +2,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import logic.Product;
 
 public class ProductTest {
 	
@@ -15,7 +19,7 @@ public class ProductTest {
 
 	
 	@Test
-	void testProductNameAndPriceShouldNotThrow() {
+	void testProductNameAndPriceShouldNotThrow() throws FileNotFoundException, IOException {
 		new Product(defaultValidName, defaultValidPrice);
 	}
 	
@@ -25,16 +29,22 @@ public class ProductTest {
 				() -> new Product(null, defaultValidPrice));
 	}
 	
+	@Test
+	void testNonExistingProductNameShouldThrowIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, 
+				() -> new Product("chocolate", defaultValidPrice));
+	}
+	
 	@ParameterizedTest
-	@ValueSource(strings = {"box of chocolates", "CHOCOLATE", "chocolate bar", "book", "bottle of headache pills"})
-	void testProductExemptionShouldNotThrow(String input) {
+	@ValueSource(strings = {"box of chocolates", "chocolate bar", "book", "packet of headache pills"})
+	void testProductExemptionShouldNotThrow(String input) throws FileNotFoundException, IOException {
 		Product product = new Product(input, defaultValidPrice);
 		assertTrue(product.isExempt());
 	}
 	
 	@ParameterizedTest
 	@ValueSource(strings = {"music CD", "bottle of perfume"})
-	void testProductNonExemptionShouldNotThrow(String input) {
+	void testProductNonExemptionShouldNotThrow(String input) throws FileNotFoundException, IOException {
 		Product product = new Product(input, defaultValidPrice);
 		assertFalse(product.isExempt());
 	}

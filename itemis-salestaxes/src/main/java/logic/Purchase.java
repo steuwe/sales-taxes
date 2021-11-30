@@ -1,3 +1,6 @@
+package logic;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -9,7 +12,7 @@ public class Purchase {
 	private boolean isImported;
 	private Product product;
 
-	public Purchase(int quantity, boolean isImported, String productName, BigDecimal productPrice) {
+	public Purchase(int quantity, boolean isImported, String productName, BigDecimal productPrice) throws FileNotFoundException, IOException {
 		this.quantity = quantity;
 		this.isImported = isImported;
 		this.product = new Product(productName, productPrice);

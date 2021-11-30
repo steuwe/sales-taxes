@@ -1,4 +1,9 @@
+package logic;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
+
+import database.ProductDatabaseReader;
 
 public class Product {
 
@@ -6,7 +11,7 @@ public class Product {
 	private BigDecimal price;
 	private boolean isExempt;
 	
-	public Product(String name, BigDecimal price) {
+	public Product(String name, BigDecimal price) throws FileNotFoundException, IOException {
 		try {
 			setName(name);
 			setPrice(price);
@@ -16,12 +21,15 @@ public class Product {
 		}
 	}
 	
-	private void validateName(String name) {
+	private void validateName(String name) throws FileNotFoundException, IOException {
 		if (name == null) {
 			throw new IllegalArgumentException("Product name is null!");
 		}
 		if (name.trim().isEmpty()) {
 			throw new IllegalArgumentException("Product name is blank!");
+		}
+		if (!ProductDatabaseReader.checkProductName(name)) {
+			throw new IllegalArgumentException("Product name does not exist!");
 		}
 	}
 	
@@ -34,9 +42,8 @@ public class Product {
 		}
 	}
 	
-	private void setExemption(String name) {
-		// depending on how products are organised (classes, database, ...) this could be done in a separate class
-		if (SalesTaxExemptionChecker.checkExemption(name)) {
+	private void setExemption(String name) throws FileNotFoundException, IOException {
+		if (ProductDatabaseReader.checkProductForExemption(name)) {
 			isExempt = true;
 		} else {
 			isExempt = false;
@@ -47,7 +54,7 @@ public class Product {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name) throws FileNotFoundException, IOException {
 		try {
 			validateName(name);
 		} catch (IllegalArgumentException e) {

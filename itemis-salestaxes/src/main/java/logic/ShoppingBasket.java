@@ -1,3 +1,6 @@
+package logic;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
@@ -18,9 +21,13 @@ public class ShoppingBasket {
 			Purchase purchase = parser.parsePurchase(item);
 			purchases.add(purchase);
 		} catch (IllegalArgumentException e) {
-			// error handling depends on type of application
-			// if user input is taken directly from console, a simple error msg on console could be enough
-			throw new IllegalArgumentException("Could not add purchase: " + e.getMessage());
+			System.out.println("Could not add purchase: " + e.getMessage());
+		} catch (FileNotFoundException e) {
+			System.out.println("Database not found!");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Something went wrong while reading the database:");
+			e.printStackTrace();
 		}
 	}
 	

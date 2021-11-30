@@ -1,3 +1,6 @@
+package demo;
+
+import logic.ShoppingBasket;
 
 public class Demo {
 

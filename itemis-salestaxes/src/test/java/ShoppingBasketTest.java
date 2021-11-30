@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import logic.ShoppingBasket;
+
 public class ShoppingBasketTest {
 	
 	private ShoppingBasket basket;
@@ -25,8 +27,11 @@ public class ShoppingBasketTest {
 			"box of chocolates",
 			"1 book at .x"
 	})
-	void addInvalidPurchaseShouldThrowIllegalArgumentException() {
-		assertThrows(IllegalArgumentException.class, () -> basket.addPurchase("1 at 12.49"));
+	void addInvalidPurchase() {
+		int sizeBefore = basket.getPurchases().size();
+		basket.addPurchase("1 at 12.49");
+		int sizeAfter = basket.getPurchases().size();
+		assertEquals(sizeBefore, sizeAfter);
 	}
 	
 	@Test

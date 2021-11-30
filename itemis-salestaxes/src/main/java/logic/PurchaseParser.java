@@ -1,8 +1,11 @@
+package logic;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 public class PurchaseParser {
 	
-	public Purchase parsePurchase(String input) {
+	public Purchase parsePurchase(String input) throws FileNotFoundException, IOException {
 		try {
 			validateInput(input);
 			String parsedInput = input.trim();
@@ -68,7 +71,8 @@ public class PurchaseParser {
 			throw new IllegalArgumentException("Product name or price is missing!");
 		}
 		String name = productInfo[0];
-		if (name.trim().isEmpty()) {
+		name = name.trim().replaceAll("\\s{2,}", " ");
+		if (name.isEmpty()) {
 			throw new IllegalArgumentException("Product name is blank!");
 		}
 		return name.trim();
