@@ -1,7 +1,0 @@
-name,food,medical,book,music
-box of chocolates,TRUE,FALSE,FALSE,FALSE
-music CD,FALSE,FALSE,FALSE,TRUE
-chocolate bar,TRUE,FALSE,FALSE,FALSE
-bottle of perfume,FALSE,FALSE,FALSE,FALSE
-packet of headache pills,FALSE,TRUE,FALSE,FALSE
-book,FALSE,FALSE,TRUE,FALSE
